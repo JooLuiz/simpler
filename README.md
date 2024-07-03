@@ -3,12 +3,12 @@
 ![Node.js](https://img.shields.io/badge/Node.js-v14.17.3-green)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
-Simpler é um servidor Node.js simples, projetado para fornecer uma base para iniciar rapidamente seus projetos de servidor.
+Simpler is a simple Node.js server, designed to rapidly provide a base to start your server projects.
 
-## Licença
+## License
 
-Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+This project is licensed under the MID license. Check file [LICENSE](LICENSE) for more details.
 
-# Outras versões
+# Other versions
 
 [Readme in Portuguese (PT-BR)](README.pt-br.md)
