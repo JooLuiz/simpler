@@ -1,4 +1,4 @@
-import Server from "./Server";
+import Server from "./main/Server";
 
 const Simpler = Server
 

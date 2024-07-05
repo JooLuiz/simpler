@@ -5,7 +5,7 @@ import type ILogger from "../Logger/logger.interface";
 import Router from "../Router";
 import Logger from "../Logger";
 import path from "path";
-import { fileTypes } from "../utils/consts";
+import { fileTypes } from "../../utils/consts";
 import { readFile } from "fs/promises";
 
 class Server implements IServer {
@@ -120,6 +120,8 @@ class Server implements IServer {
         );
       });
     }
+
+    return this.httpServer;
   }
 
   async serveStaticFiles(

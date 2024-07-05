@@ -9,7 +9,11 @@ declare global {
     queryParams: Record<string, string>
   ) => void;
 
-  type ListenFunction = (port?: number) => void;
+  type ListenFunction = (
+    port?: number
+  ) =>
+    | http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
+    | undefined;
 
   type ResponseFunction = (
     res: ServerResponse,
