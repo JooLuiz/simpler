@@ -9,4 +9,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
  
 ### Added
 
+- Creating Simpler server base structure (Server, Router and Logger) to deal with API routes.
+
 - Adding github actions, changelog and readme files.
