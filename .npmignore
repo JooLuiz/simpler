@@ -1,0 +1,27 @@
+# Arquivos de configuração
+.eslintrc
+.prettierrc
+.stylelintrc
+
+# Arquivos de teste
+__tests__
+test/
+tests/
+*.test.ts
+*.spec.ts
+
+# Pastas e arquivos de build
+build/
+lib/
+*.log
+
+# Arquivos temporários
+*.tmp
+
+# Dependências locais instaladas
+node_modules/
+
+# Outros arquivos que não são necessários para o pacote publicado
+.editorconfig
+.gitignore
+.npmrc

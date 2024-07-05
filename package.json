@@ -1,0 +1,33 @@
+{
+  "name": "simpler-server",
+  "version": "0.1.1",
+  "description": "Simpler is a simple Node.js server, designed to rapidly provide a base to start your server projects.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "start": "node dist/dev.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/dev.ts",
+    "lint": "eslint . --ext .ts",
+    "test": "jest --config jest.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:JooLuiz/simpler.git"
+  },
+  "keywords": [],
+  "author": "João Luiz de Castro (https://github.com/JooLuiz)",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.9",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.5",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.3"
+  }
+}

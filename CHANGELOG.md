@@ -9,4 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
  
 ### Added
 
+- Implementing tests for Logger, Router and Server
+
+- Creating Simpler server README.md file.
+
+- Creating Simpler server response method.
+
+- Creating Simpler server methods to serve static files.
+
+- Creating Simpler server base structure (Server, Router and Logger) to deal with API routes.
+
 - Adding github actions, changelog and readme files.
