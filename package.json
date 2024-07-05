@@ -1,6 +1,6 @@
 {
-  "name": "simpler",
-  "version": "0.1.0",
+  "name": "simpler-server",
+  "version": "0.1.1",
   "description": "Simpler is a simple Node.js server, designed to rapidly provide a base to start your server projects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

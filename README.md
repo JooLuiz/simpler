@@ -1,4 +1,4 @@
-# Simpler
+# Simpler Server
 
 ![Node.js](https://img.shields.io/badge/Node.js-v14.17.3-green)
 ![License](https://img.shields.io/badge/license-MIT-blue)
@@ -10,7 +10,7 @@ Simpler is a lightweight, customizable Node.js server framework. It allows you t
 To install Simpler, you can use npm:
 
 ```bash
-npm install simpler
+npm install simpler-server
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ npm install simpler
 You can create an instance of Simpler by importing it and optionally enabling verbose logging:
 
 ```typescript
-import Simpler from "simpler";
+import Simpler from "simpler-server";
 
 const simpler = new Simpler(true); // Enable verbose logging
 ```
@@ -133,7 +133,7 @@ Here is an example of a full setup using Simpler:
 
 ```typescript
 import { readFile } from "fs";
-import Simpler from "simpler";
+import Simpler from "simpler-server";
 import path from "path";
 
 const simpler = new Simpler(true);
