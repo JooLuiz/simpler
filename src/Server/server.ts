@@ -4,6 +4,9 @@ import type IRouter from "../Router/router.interface";
 import type ILogger from "../Logger/logger.interface";
 import Router from "../Router";
 import Logger from "../Logger";
+import path from "path";
+import { fileTypes } from "../utils/consts";
+import { readFile } from "fs/promises";
 
 class Server implements IServer {
   private httpServer: http.Server | undefined;
@@ -42,12 +45,7 @@ class Server implements IServer {
             (err as Error).message
           }`
         );
-        res.writeHead(500, { "Content-Type": "application/json" });
-        res.end(
-          JSON.stringify({
-            message: (err as Error).message || "Something went wrong",
-          })
-        );
+        this.errorResponse(res, err as Error);
       }
     });
   }
@@ -56,14 +54,22 @@ class Server implements IServer {
     const srvr = http.createServer(
       async (req: IncomingMessage, res: ServerResponse) => {
         try {
+          const isStaticPage = await this.serveStaticFiles(req, res);
+          if (isStaticPage) {
+            return;
+          }
           const route = this.router.getRoute(req.url, req.method);
           if (!route) {
             this.logger.logIfVerbose(
               `Route ${req.url} not Found`,
               this.isVerbose
             );
-            res.writeHead(404, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ message: "Route Not Found" }));
+            this.response(
+              res,
+              404,
+              "application/json",
+              JSON.stringify({ message: "Route Not Found" })
+            );
             return;
           }
 
@@ -77,7 +83,7 @@ class Server implements IServer {
             this.isVerbose
           );
 
-          const queryParams = this.router.getqueryParams(req.url);
+          const queryParams = this.router.getQueryParams(req.url);
 
           this.logger.logIfVerbose(
             `Query Params: ${JSON.stringify(queryParams)}`,
@@ -92,13 +98,7 @@ class Server implements IServer {
             }`
           );
 
-          res.writeHead(500, { "Content-Type": "application/json" });
-
-          res.end(
-            JSON.stringify({
-              message: (err as Error).message || "Something went wrong",
-            })
-          );
+          this.errorResponse(res, err as Error);
         }
       }
     );
@@ -106,7 +106,7 @@ class Server implements IServer {
     this.httpServer = srvr;
   }
 
-  listen(port: number) {
+  listen(port?: number) {
     if (!this.httpServer) {
       this.createServer();
     }
@@ -120,6 +120,59 @@ class Server implements IServer {
         );
       });
     }
+  }
+
+  async serveStaticFiles(
+    req: IncomingMessage,
+    res: ServerResponse
+  ): Promise<boolean> {
+    if (!req.url) {
+      return false;
+    }
+
+    const staticDirs = this.router.getStaticDirs();
+    for (const dir of staticDirs) {
+      const publicDirectory = path.join(__dirname, `../${dir}`);
+      const filePath = path.join(
+        publicDirectory,
+        req.url === "/" ? "index.html" : req.url || ""
+      );
+      this.logger.logIfVerbose(`Static File Path: ${filePath}`, this.isVerbose);
+      const extname = String(path.extname(filePath)).toLowerCase();
+      const contentType =
+        fileTypes[extname as FILE_EXTENSIONS] || "application/octet-stream";
+      try {
+        const content = await readFile(filePath);
+        this.response(res, 200, contentType, content);
+        return true;
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+          this.logger.logIfVerbose((error as Error).message, this.isVerbose);
+        }
+      }
+    }
+    return false;
+  }
+
+  response<T>(
+    res: ServerResponse,
+    status: number,
+    contentType: string,
+    message: T
+  ) {
+    res.writeHead(status, { "Content-Type": contentType });
+    res.end(message);
+  }
+
+  private errorResponse(res: ServerResponse, err: Error) {
+    this.response(
+      res,
+      500,
+      "application/json",
+      JSON.stringify({
+        message: (err as Error).message || "Something went wrong",
+      })
+    );
   }
 }
 

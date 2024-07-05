@@ -11,6 +11,10 @@
     "lint": "eslint . --ext .ts",
     "test": "jest"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:JooLuiz/simpler.git"
+  },
   "keywords": [],
   "author": "João Luiz de Castro (https://github.com/JooLuiz)",
   "license": "ISC",

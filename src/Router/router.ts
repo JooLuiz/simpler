@@ -1,11 +1,10 @@
 import type IRouter from "./router.interface";
 
 class Router implements IRouter {
-  private routes: Route[];
+  private routes: Route[] = [];
+  private staticDirs: string[] = ["public"];
 
-  constructor() {
-    this.routes = [];
-  }
+  constructor() {}
 
   addRoute(url: string, method: METHODS[], callback: RouteCallback): void {
     this.routes.push({
@@ -67,7 +66,7 @@ class Router implements IRouter {
     return pathVariables;
   }
 
-  getqueryParams(url: string | undefined): Record<string, string> {
+  getQueryParams(url: string | undefined): Record<string, string> {
     if (!url) return {};
 
     const queryParams: Record<string, string> = {};
@@ -82,6 +81,20 @@ class Router implements IRouter {
     });
 
     return queryParams;
+  }
+
+  addStaticDirectory(directory: string) {
+    this.staticDirs.push(directory);
+  }
+
+  addStaticDirectories(directories: string[]) {
+    directories.forEach((dir) => {
+      this.addStaticDirectory(dir);
+    });
+  }
+
+  getStaticDirs() {
+    return this.staticDirs;
   }
 }
 export default Router;
