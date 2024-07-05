@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
  
 ## [Unreleased] - yyyy-mm-dd
+
+## [0.1.2] - 2024-07-05
+
+### Fixed
+
+- Adjusting jest config file
+
+## [0.1.1] - 2024-07-05
  
 ### Added
 
