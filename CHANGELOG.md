@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
  
 ## [Unreleased] - yyyy-mm-dd
 
+## [0.2.1] - 2024-07-06
+
+### Fixed
+
+- Adjusting loadFile and serverStaticDirectoriesto read from project base directory not from inside node_modules
+
 ## [0.2.0] - 2024-07-06
 
 ### Added
