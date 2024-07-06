@@ -35,14 +35,19 @@ Simpler has a response method that will run the default response methods, you ca
 
 ```typescript
 //Returning with simpler
-simpler.response(res, 200, "application/json", JSON.stringify(parsedBody));
+simpler.response(
+  res,
+  200,
+  { "Content-Type": "application/json" },
+  JSON.stringify(parsedBody)
+);
 
 //Equivalent returning directly with res
 res.writeHead(200, { "Content-Type": "application/json" });
 res.end(JSON.stringify(parsedBody));
 
 //Returning with simpler
-simpler.response(res, 200, "text/html", data);
+simpler.response(res, 200, { "Content-Type": "text/html" }, data);
 
 //Equivalent returning directly with res
 res.writeHead(200, { "Content-Type": "text/html" });
@@ -57,7 +62,12 @@ simpler.router.addRoute(
   ["POST", "GET"],
   (_req, res, body, _pathVariables, _queryParams) => {
     const parsedBody = JSON.parse(body);
-    simpler.response(res, 200, "application/json", JSON.stringify(parsedBody));
+    simpler.response(
+      res,
+      200,
+      { "Content-Type": "application/json" },
+      JSON.stringify(parsedBody)
+    );
     return;
   }
 );
@@ -73,7 +83,12 @@ simpler.router.addRoute(
       "id": "{value}"
       }
     */
-    simpler.response(res, 200, "application/json", JSON.stringify(parsedBody));
+    simpler.response(
+      res,
+      200,
+      { "Content-Type": "application/json" },
+      JSON.stringify(parsedBody)
+    );
     return;
   }
 );
@@ -90,7 +105,12 @@ simpler.router.addRoute(
       "xpto": "{value2}",
       }
     */
-    simpler.response(res, 200, "application/json", JSON.stringify(parsedBody));
+    simpler.response(
+      res,
+      200,
+      { "Content-Type": "application/json" },
+      JSON.stringify(parsedBody)
+    );
     return;
   }
 );
@@ -110,11 +130,16 @@ simpler.router.addRoute("/static", ["GET"], (_req, res) => {
   const testePath = path.join(__dirname, "static", "test.html");
   readFile(testePath, (err, data) => {
     if (err) {
-      simpler.response(res, 500, "text/plain", "500 Internal Server Error");
+      simpler.response(
+        res,
+        500,
+        { "Content-Type": "text/plain" },
+        "500 Internal Server Error"
+      );
       return;
     }
 
-    simpler.response(res, 200, "text/html", data);
+    simpler.response(res, 200, { "Content-Type": "text/plain" }, data);
   });
 });
 ```
@@ -128,6 +153,18 @@ Below you'll find an example of how to use it.
 ```typescript
 simpler.router.addRoute("/static-page", ["GET"], (_req, res) => {
   simpler.loadFile(res, "./src/static/teste.html");
+});
+```
+
+### Redirecting
+
+You can redirect routes with the function `redirect`, it receives a res and the relative url to be redirected to.
+
+Below you'll find an example of how yo use it
+
+```typescript
+simpler.router.addRoute("/redir", ["GET"], (_req, res) => {
+  simpler.redirect(res, "/static-page");
 });
 ```
 
@@ -167,7 +204,12 @@ const simpler = new Simpler(true);
 
 simpler.router.addRoute("/test", ["POST", "GET"], (_req, res, body) => {
   const parsedBody = JSON.parse(body);
-  simpler.response(res, 200, "application/json", JSON.stringify(parsedBody));
+  simpler.response(
+    res,
+    200,
+    { "Content-Type": "application/json" },
+    JSON.stringify(parsedBody)
+  );
   return;
 });
 
@@ -176,7 +218,12 @@ simpler.router.addRoute(
   ["POST", "GET"],
   (_req, res, body: string, _pathVariables, _queryParams) => {
     const parsedBody = JSON.parse(body);
-    simpler.response(res, 200, "application/json", JSON.stringify(parsedBody));
+    simpler.response(
+      res,
+      200,
+      { "Content-Type": "application/json" },
+      JSON.stringify(parsedBody)
+    );
     return;
   }
 );
@@ -186,7 +233,12 @@ simpler.router.addRoute(
   ["POST", "GET"],
   (_req, res, body, _pathVariables, _queryParams) => {
     const parsedBody = JSON.parse(body);
-    simpler.response(res, 200, "application/json", JSON.stringify(parsedBody));
+    simpler.response(
+      res,
+      200,
+      { "Content-Type": "application/json" },
+      JSON.stringify(parsedBody)
+    );
     return;
   }
 );
