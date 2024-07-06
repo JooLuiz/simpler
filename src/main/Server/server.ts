@@ -124,7 +124,7 @@ class Server implements IServer {
 
     const staticDirs = this.router.getStaticDirs();
     for (const dir of staticDirs) {
-      const publicDirectory = path.join(__dirname, "../../", dir);
+      const publicDirectory = path.join(process.cwd(), dir);
       const filePath = path.join(
         publicDirectory,
         req.url === "/" ? "index.html" : req.url || ""
@@ -148,7 +148,7 @@ class Server implements IServer {
   }
 
   public async loadFile(res: ServerResponse, urlFile: string) {
-    const filePath = path.join(__dirname, "../../", urlFile);
+    const filePath = path.join(process.cwd(), urlFile);
     console.log("load file file path", filePath);
     try {
       const content = await readFile(filePath);

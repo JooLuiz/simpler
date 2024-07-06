@@ -104,7 +104,7 @@ You can configure Simpler to serve static files from a directory using the `addS
 import path from "path";
 import { readFile } from "fs";
 
-simpler.router.addStaticDirectory("static");
+simpler.router.addStaticDirectory("./src/static");
 
 simpler.router.addRoute("/static", ["GET"], (_req, res) => {
   const testePath = path.join(__dirname, "static", "test.html");
@@ -127,7 +127,7 @@ Below you'll find an example of how to use it.
 
 ```typescript
 simpler.router.addRoute("/static-page", ["GET"], (_req, res) => {
-  simpler.loadFile(res, "./static/teste.html");
+  simpler.loadFile(res, "./src/static/teste.html");
 });
 ```
 
@@ -191,10 +191,10 @@ simpler.router.addRoute(
   }
 );
 
-simpler.router.addStaticDirectory("static");
+simpler.router.addStaticDirectory("./src/static");
 
 simpler.router.addRoute("/static-page", ["GET"], (_req, res) => {
-  simpler.loadFile(res, "./static/teste.html");
+  simpler.loadFile(res, "./src/static/teste.html");
 });
 
 simpler.errorHandler.setCustomErrorHandler(
