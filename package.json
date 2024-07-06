@@ -1,6 +1,6 @@
 {
   "name": "simpler-server",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Simpler is a simple Node.js server, designed to rapidly provide a base to start your server projects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git@github.com:JooLuiz/simpler.git"
   },
-  "keywords": [],
+  "keywords": ["Node Server"],
   "author": "João Luiz de Castro (https://github.com/JooLuiz)",
   "license": "ISC",
   "devDependencies": {

@@ -6,7 +6,11 @@ class Router implements IRouter {
 
   constructor() {}
 
-  addRoute(url: string, method: METHODS[], callback: RouteCallback): void {
+  public addRoute(
+    url: string,
+    method: METHODS[],
+    callback: RouteCallback
+  ): void {
     this.routes.push({
       url,
       method,
@@ -14,13 +18,16 @@ class Router implements IRouter {
     });
   }
 
-  addRoutes(routes: [Route]) {
+  public addRoutes(routes: [Route]) {
     routes.forEach((route) => {
       this.addRoute(route.url, route.method, route.callback);
     });
   }
 
-  getRoute(url: string | undefined, method: string | undefined): Route | null {
+  public getRoute(
+    url: string | undefined,
+    method: string | undefined
+  ): Route | null {
     if (!url || !method) {
       return null;
     }
@@ -45,7 +52,7 @@ class Router implements IRouter {
     return route;
   }
 
-  getPathVariables(
+  public getPathVariables(
     reqUrl: string | undefined,
     routeUrl: string
   ): Record<string, string> {
@@ -66,7 +73,7 @@ class Router implements IRouter {
     return pathVariables;
   }
 
-  getQueryParams(url: string | undefined): Record<string, string> {
+  public getQueryParams(url: string | undefined): Record<string, string> {
     if (!url) return {};
 
     const queryParams: Record<string, string> = {};
@@ -83,17 +90,17 @@ class Router implements IRouter {
     return queryParams;
   }
 
-  addStaticDirectory(directory: string) {
+  public addStaticDirectory(directory: string) {
     this.staticDirs.push(directory);
   }
 
-  addStaticDirectories(directories: string[]) {
+  public addStaticDirectories(directories: string[]) {
     directories.forEach((dir) => {
       this.addStaticDirectory(dir);
     });
   }
 
-  getStaticDirs() {
+  public getStaticDirs() {
     return this.staticDirs;
   }
 }

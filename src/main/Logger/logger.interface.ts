@@ -1,7 +1,7 @@
 interface ILogger {
-  log: (message: string) => void;
-  logIfVerbose: (message: string, isVerbose: boolean) => void;
-  error: (message: string) => void;
+  log: LoggerFunction;
+  logIfVerbose: LoggerFunction;
+  error: LoggerFunction;
 }
 
 export default ILogger;

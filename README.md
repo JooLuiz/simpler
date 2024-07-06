@@ -119,6 +119,33 @@ simpler.router.addRoute("/static", ["GET"], (_req, res) => {
 });
 ```
 
+### Loading Files
+
+You can load files with simpler with the function `loadFile`, it receives a res and the relative path to the file.
+
+Below you'll find an example of how to use it.
+
+```typescript
+simpler.router.addRoute("/static-page", ["GET"], (_req, res) => {
+  simpler.loadFile(res, "./static/teste.html");
+});
+```
+
+### Handling errors
+
+You can have custom error handlers using the function `errorHandler.setCustomErrorHandler`. It receives a function that will have a res and an error as parameters.
+
+Below you'll find an example of how to use it.
+
+```typescript
+simpler.errorHandler.setCustomErrorHandler(
+  (res: ServerResponse, error: Error) => {
+    res.writeHead(400, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: "Custom Error", error: error.message }));
+  }
+);
+```
+
 ### Starting the Server
 
 To start the server, use the `listen` method. You can specify the port number, which defaults to 3000 if not provided.
@@ -166,17 +193,16 @@ simpler.router.addRoute(
 
 simpler.router.addStaticDirectory("static");
 
-simpler.router.addRoute("/static", ["GET"], (_req, res) => {
-  const testePath = path.join(__dirname, "static", "teste.html");
-  readFile(testePath, (err, data) => {
-    if (err) {
-      simpler.response(res, 500, "text/plain", "500 Internal Server Error");
-      return;
-    }
-
-    simpler.response(res, 200, "text/html", data);
-  });
+simpler.router.addRoute("/static-page", ["GET"], (_req, res) => {
+  simpler.loadFile(res, "./static/teste.html");
 });
+
+simpler.errorHandler.setCustomErrorHandler(
+  (res: ServerResponse, error: Error) => {
+    res.writeHead(400, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: "Custom Error", error: error.message }));
+  }
+);
 
 simpler.listen(3001);
 ```

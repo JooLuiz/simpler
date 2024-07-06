@@ -119,6 +119,34 @@ simpler.router.addRoute("/static", ["GET"], (_req, res) => {
 });
 ```
 
+### Carregando arquivos
+
+Você pode carregar arquivos com simpler utilizando a função `loadFile`, a função recebe um res a o caminho relativo para o arquivo.
+
+Abaixo você encontrará um exemplo de como utilizar-la.
+
+```typescript
+simpler.router.addRoute("/static-page", ["GET"], (_req, res) => {
+  simpler.loadFile(res, "./static/teste.html");
+});
+```
+
+### Lidando com Erros
+
+Você pode lidar com erros de maneira customizada utilizando a função `errorHandler.setCustomErrorHandler`. A função recebe uma função como parâmetro que receberá res e error como parâmetros.
+
+Abaixo você encontrará um exemplo de como utilizar-la.
+
+```typescript
+simpler.errorHandler.setCustomErrorHandler(
+  (res: ServerResponse, error: Error) => {
+    res.writeHead(400, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: "Custom Error", error: error.message }));
+  }
+);
+```
+
+
 ### Iniciando o Servidor
 
 Para iniciar o servidor, use o método `listen`. Você pode especificar o número da porta, que por padrão é 3000 se não for fornecido.
@@ -166,17 +194,16 @@ simpler.router.addRoute(
 
 simpler.router.addStaticDirectory("static");
 
-simpler.router.addRoute("/static", ["GET"], (_req, res) => {
-  const testePath = path.join(__dirname, "static", "teste.html");
-  readFile(testePath, (err, data) => {
-    if (err) {
-      simpler.response(res, 500, "text/plain", "500 Internal Server Error");
-      return;
-    }
-
-    simpler.response(res, 200, "text/html", data);
-  });
+simpler.router.addRoute("/static-page", ["GET"], (_req, res) => {
+  simpler.loadFile(res, "./static/teste.html");
 });
+
+simpler.errorHandler.setCustomErrorHandler(
+  (res: ServerResponse, error: Error) => {
+    res.writeHead(400, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: "Custom Error", error: error.message }));
+  }
+);
 
 simpler.listen(3001);
 ```
