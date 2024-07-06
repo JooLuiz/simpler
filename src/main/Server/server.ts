@@ -54,7 +54,6 @@ class Server implements IServer {
     const srvr = http.createServer(
       async (req: IncomingMessage, res: ServerResponse) => {
         try {
-          console.log(req.url);
           const isStaticPage = await this.serveStaticFiles(req, res);
           if (isStaticPage) {
             return;
@@ -65,7 +64,7 @@ class Server implements IServer {
             this.response(
               res,
               404,
-              "application/json",
+              { "Content-Type": "application/json" },
               JSON.stringify({ message: "Route Not Found" })
             );
             return;
@@ -135,7 +134,7 @@ class Server implements IServer {
         fileTypes[extname as FILE_EXTENSIONS] || "application/octet-stream";
       try {
         const content = await readFile(filePath);
-        this.response(res, 200, contentType, content);
+        this.response(res, 200, { "Content-Type": contentType }, content);
         this.logger.logIfVerbose(`Loaded Static File:${filePath}`);
         return true;
       } catch (error) {
@@ -149,10 +148,9 @@ class Server implements IServer {
 
   public async loadFile(res: ServerResponse, urlFile: string) {
     const filePath = path.join(process.cwd(), urlFile);
-    console.log("load file file path", filePath);
     try {
       const content = await readFile(filePath);
-      this.response(res, 200, "text/html", content);
+      this.response(res, 200, { "Content-Type": "text/html" }, content);
       return;
     } catch (error) {
       this.errorHandler.handleError(res, error as Error);
@@ -162,11 +160,15 @@ class Server implements IServer {
   public response<T>(
     res: ServerResponse,
     status: number,
-    contentType: string,
-    message: T
+    headers: Record<string, string>,
+    content: T
   ) {
-    res.writeHead(status, { "Content-Type": contentType });
-    res.end(message);
+    res.writeHead(status, headers);
+    res.end(content);
+  }
+
+  public redirect(res: ServerResponse, location: string) {
+    this.response(res, 302, { Location: location }, null);
   }
 }
 

@@ -18,9 +18,10 @@ declare global {
   type ResponseFunction = (
     res: ServerResponse,
     status: number,
-    contentType: string,
-    message: T
+    headers: Record<string, string>,
+    content: T
   ) => void;
 
   type LoadFileFunction = (res: ServerResponse, urlFile: string) => void;
+  type RedirectFunction = (res: ServerResponse, location: string) => void;
 }

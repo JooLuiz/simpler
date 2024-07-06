@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
  
 ## [Unreleased] - yyyy-mm-dd
 
+## [0.3.0] - 2024-07-06
+
+### Added
+
+- Implementing Redirect function and adjusting response function
+
 ## [0.2.1] - 2024-07-06
 
 ### Fixed

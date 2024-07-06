@@ -35,14 +35,19 @@ Simpler possui um método de resposta que executará os métodos de resposta pad
 
 ```typescript
 // Retornando com Simpler
-simpler.response(res, 200, "application/json", JSON.stringify(parsedBody));
+simpler.response(
+  res,
+  200,
+  { "Content-Type": "application/json" },
+  JSON.stringify(parsedBody)
+);
 
 // Equivalente retornando diretamente com res
 res.writeHead(200, { "Content-Type": "application/json" });
 res.end(JSON.stringify(parsedBody));
 
 // Retornando com Simpler
-simpler.response(res, 200, "text/html", data);
+simpler.response(res, 200, { "Content-Type": "text/html" }, data);
 
 // Equivalente retornando diretamente com res
 res.writeHead(200, { "Content-Type": "text/html" });
@@ -57,7 +62,12 @@ simpler.router.addRoute(
   ["POST", "GET"],
   (_req, res, body, _pathVariables, _queryParams) => {
     const parsedBody = JSON.parse(body);
-    simpler.response(res, 200, "application/json", JSON.stringify(parsedBody));
+    simpler.response(
+      res,
+      200,
+      { "Content-Type": "application/json" },
+      JSON.stringify(parsedBody)
+    );
     return;
   }
 );
@@ -73,7 +83,12 @@ simpler.router.addRoute(
       "id": "{valor}"
       }
     */
-    simpler.response(res, 200, "application/json", JSON.stringify(parsedBody));
+    simpler.response(
+      res,
+      200,
+      { "Content-Type": "application/json" },
+      JSON.stringify(parsedBody)
+    );
     return;
   }
 );
@@ -90,7 +105,12 @@ simpler.router.addRoute(
       "xpto": "{valor2}",
       }
     */
-    simpler.response(res, 200, "application/json", JSON.stringify(parsedBody));
+    simpler.response(
+      res,
+      200,
+      { "Content-Type": "application/json" },
+      JSON.stringify(parsedBody)
+    );
     return;
   }
 );
@@ -110,11 +130,16 @@ simpler.router.addRoute("/static", ["GET"], (_req, res) => {
   const testePath = path.join(__dirname, "static", "test.html");
   readFile(testePath, (err, data) => {
     if (err) {
-      simpler.response(res, 500, "text/plain", "500 Internal Server Error");
+      simpler.response(
+        res,
+        500,
+        { "Content-Type": "text/plain" },
+        "500 Internal Server Error"
+      );
       return;
     }
 
-    simpler.response(res, 200, "text/html", data);
+    simpler.response(res, 200, { "Content-Type": "text/html" }, data);
   });
 });
 ```
@@ -131,6 +156,18 @@ simpler.router.addRoute("/static-page", ["GET"], (_req, res) => {
 });
 ```
 
+### Redirecionando
+
+Você pode redirectionar rotas com a função `redirect`, ela recebe um parametro res e a url relativa para onde deve-se redirecionar o usuário.
+
+Abaixo você encontrará um exemplo de como utilizar-la.
+
+```typescript
+simpler.router.addRoute("/redir", ["GET"], (_req, res) => {
+  simpler.redirect(res, "/static-page");
+});
+```
+
 ### Lidando com Erros
 
 Você pode lidar com erros de maneira customizada utilizando a função `errorHandler.setCustomErrorHandler`. A função recebe uma função como parâmetro que receberá res e error como parâmetros.
@@ -140,12 +177,13 @@ Abaixo você encontrará um exemplo de como utilizar-la.
 ```typescript
 simpler.errorHandler.setCustomErrorHandler(
   (res: ServerResponse, error: Error) => {
-    res.writeHead(400, { "Content-Type": "application/json" });
+    res.writeHead(400, {
+      "Content-Type": { "Content-Type": "application/json" },
+    });
     res.end(JSON.stringify({ message: "Custom Error", error: error.message }));
   }
 );
 ```
-
 
 ### Iniciando o Servidor
 
@@ -168,7 +206,12 @@ const simpler = new Simpler(true);
 
 simpler.router.addRoute("/test", ["POST", "GET"], (_req, res, body) => {
   const parsedBody = JSON.parse(body);
-  simpler.response(res, 200, "application/json", JSON.stringify(parsedBody));
+  simpler.response(
+    res,
+    200,
+    { "Content-Type": "application/json" },
+    JSON.stringify(parsedBody)
+  );
   return;
 });
 
@@ -177,7 +220,12 @@ simpler.router.addRoute(
   ["POST", "GET"],
   (_req, res, body: string, _pathVariables, _queryParams) => {
     const parsedBody = JSON.parse(body);
-    simpler.response(res, 200, "application/json", JSON.stringify(parsedBody));
+    simpler.response(
+      res,
+      200,
+      { "Content-Type": "application/json" },
+      JSON.stringify(parsedBody)
+    );
     return;
   }
 );
@@ -187,7 +235,12 @@ simpler.router.addRoute(
   ["POST", "GET"],
   (_req, res, body, _pathVariables, _queryParams) => {
     const parsedBody = JSON.parse(body);
-    simpler.response(res, 200, "application/json", JSON.stringify(parsedBody));
+    simpler.response(
+      res,
+      200,
+      { "Content-Type": "application/json" },
+      JSON.stringify(parsedBody)
+    );
     return;
   }
 );
