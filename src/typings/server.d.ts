@@ -21,4 +21,6 @@ declare global {
     contentType: string,
     message: T
   ) => void;
+
+  type LoadFileFunction = (res: ServerResponse, urlFile: string) => void;
 }

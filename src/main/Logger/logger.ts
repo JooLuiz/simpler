@@ -1,19 +1,23 @@
 import ILogger from "./logger.interface";
 
 class Logger implements ILogger {
-  constructor() {}
+  private isVerbose: boolean;
 
-  log(message: string) {
+  constructor(isVerbose: boolean) {
+    this.isVerbose = isVerbose;
+  }
+
+  public log(message: string) {
     console.log(message);
   }
 
-  logIfVerbose(message: string, isVerbose: boolean) {
-    if (isVerbose) {
+  public logIfVerbose(message: string) {
+    if (this.isVerbose) {
       this.log(message);
     }
   }
 
-  error(message: string) {
+  public error(message: string) {
     console.error(message);
   }
 }

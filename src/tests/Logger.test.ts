@@ -6,7 +6,7 @@ describe("Logger", () => {
   let consoleErrorSpy: jest.SpyInstance;
 
   beforeEach(() => {
-    logger = new Logger();
+    logger = new Logger(false);
     consoleLogSpy = jest.spyOn(console, "log").mockImplementation(() => {});
     consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
   });
@@ -22,14 +22,15 @@ describe("Logger", () => {
   });
 
   test("logIfVerbose should call log if isVerbose is true", () => {
+    logger = new Logger(true);
     const message = "Verbose log message";
-    logger.logIfVerbose(message, true);
+    logger.logIfVerbose(message);
     expect(consoleLogSpy).toHaveBeenCalledWith(message);
   });
 
   test("logIfVerbose should not call log if isVerbose is false", () => {
     const message = "Non-verbose log message";
-    logger.logIfVerbose(message, false);
+    logger.logIfVerbose(message);
     expect(consoleLogSpy).not.toHaveBeenCalled();
   });
 

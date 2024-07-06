@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
  
 ## [Unreleased] - yyyy-mm-dd
 
+## [0.2.0] - 2024-07-06
+
+### Added
+
+- Implementing Error handler and loadFile function
+
+### Fixed
+
+- Adjusting the serveStaticFiles function
+
 ## [0.1.2] - 2024-07-05
 
 ### Fixed
